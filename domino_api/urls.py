@@ -18,8 +18,15 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from dominoapi.models import *
+from dominoapi.views import TaskLists, Tasks, Steps, TaskSteps, Users
 
 router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'taskLists', TaskLists, 'list')
+# first argument = url route, second argument = name of viewset, third argument = view_name
+router.register(r'tasks', Tasks, 'task')
+router.register(r'steps', Steps, 'step')
+router.register(r'tasksteps', TaskSteps, 'taskstep')
+router.register(r'users', Users, 'user')
 
 urlpatterns = [
     path('', include(router.urls)),
