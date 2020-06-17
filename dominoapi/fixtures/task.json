@@ -1,0 +1,80 @@
+[
+    {
+        "model": "dominoapi.task",
+        "pk": 1,
+        "fields": {
+            "name": "Create Views",
+            "description": "make views in dominoapi for all entities",
+            "is_complete": true,
+            "task_list_id": 5,
+            "user_id": 2,
+            "importance": null,
+            "recurring": null
+        }
+    },
+    {
+        "model": "dominoapi.task",
+        "pk": 2,
+        "fields": {
+            "name": "Finish Resume",
+            "description": "add final resume to c38 class folder",
+            "is_complete": true,
+            "task_list_id": 5,
+            "user_id": 2,
+            "importance": null,
+            "recurring": null
+        }
+    },
+    {
+        "model": "dominoapi.task",
+        "pk": 3,
+        "fields": {
+            "name": "Fix toilet",
+            "description": null,
+            "is_complete": true,
+            "task_list_id": 3,
+            "user_id": 2,
+            "importance": null,
+            "recurring": null
+        }
+    },
+    {
+        "model": "dominoapi.task",
+        "pk": 4,
+        "fields": {
+            "name": "Water plants",
+            "description": null,
+            "is_complete": false,
+            "task_list_id": 1,
+            "user_id": 3,
+            "importance": null,
+            "recurring": null
+        }
+    },
+    {
+        "model": "dominoapi.task",
+        "pk": 5,
+        "fields": {
+            "name": "Deposit Stimulus Check",
+            "description": null,
+            "is_complete": false,
+            "task_list_id": 1,
+            "user_id": 3,
+            "importance": null,
+            "recurring": null
+        }
+    },
+    {
+        "model": "dominoapi.task",
+        "pk": 6,
+        "fields": {
+            "name": "Make Amazon Order",
+            "description": null,
+            "is_complete": false,
+            "task_list_id": 1,
+            "user_id": 2,
+            "importance": null,
+            "recurring": null
+        }
+    }
+]

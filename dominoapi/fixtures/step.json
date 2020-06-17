@@ -1,0 +1,62 @@
+[
+    {
+        "model": "dominoapi.step",
+        "pk": 1,
+        "fields": {
+            "name": "List View",
+            "description": "add functioning list and retrieve methods for list entities",
+            "is_complete": true,
+            "importance": null
+        }
+    },
+    {
+        "model": "dominoapi.step",
+        "pk": 2,
+        "fields": {
+            "name": "Task View",
+            "description": "add functioning list and retrieve methods for task entities",
+            "is_complete": true,
+            "importance": null
+        }
+    },
+    {
+        "model": "dominoapi.step",
+        "pk": 3,
+        "fields": {
+            "name": "Get info",
+            "description": "find model of toilet",
+            "is_complete": true,
+            "importance": null      
+        }
+    },
+    {
+        "model": "dominoapi.step",
+        "pk": 4,
+        "fields": {
+            "name": "Order new flapper",
+            "description": null,
+            "is_complete": false,
+            "importance": null
+        }
+    },
+    {
+        "model": "dominoapi.step",
+        "pk": 5,
+        "fields": {
+            "name": "Replace flapper",
+            "description": "https://www.youtube.com/watch?v=MOKn9j6cmZ4&list=PLrLt2hopxXhVLOGWBb0InOv7JtqXdOdqa&index=4&t=4s",
+            "is_complete": false,
+            "importance": null
+        }
+    },
+    {
+        "model": "dominoapi.step",
+        "pk": 6,
+        "fields": {
+            "name": "Order sunscreen",
+            "description": "biore or shiseido",
+            "is_complete": false,
+            "importance": null
+        }
+    }
+]

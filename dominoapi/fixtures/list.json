@@ -1,0 +1,56 @@
+[
+    {
+        "model": "dominoapi.list",
+        "pk": 1,
+        "fields": {
+            "name": "To-Do",
+            "description": "General to-do list",
+            "user_id": null
+        }
+    },
+    {
+        "model": "dominoapi.list",
+        "pk": 2,
+        "fields": {
+            "name": "Daily",
+            "description": "List of daily tasks",
+            "user_id": null
+        }
+    },
+    {
+        "model": "dominoapi.list",
+        "pk": 3,
+        "fields": {
+            "name": "House",
+            "description": "List of home-related tasks",
+            "user_id": null
+        }
+    },
+    {
+        "model": "dominoapi.list",
+        "pk": 4,
+        "fields": {
+            "name": "Finance",
+            "description": "List of finance-related tasks",
+            "user_id": null
+        }
+    },
+    {
+        "model": "dominoapi.list",
+        "pk": 5,
+        "fields": {
+            "name": "School",
+            "description": "List of school-related tasks",
+            "user_id": null
+        }
+    },
+    {
+        "model": "dominoapi.list",
+        "pk": 6,
+        "fields": {
+            "name": "Goals",
+            "description": "List of goals",
+            "user_id": null
+        }
+    }
+]
