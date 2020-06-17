@@ -15,8 +15,11 @@ This is the Django REST API for Domino
 1. Run migrations:
    `python manage.py makemigrations dominoapi`
    `python manage.py migrate`
-1. Load fixture data into database:
-
+1. Load fixture data into database (optional):
+   `python manage.py loaddata list`
+   `python manage.py loaddata task`
+   `python manage.py loaddata step`
+   `python manage.py loaddata taskStep`
 1. Start the Server:
    `python manage.py runserver`
 
