@@ -6,7 +6,6 @@ from rest_framework import serializers
 from rest_framework import status
 from dominoapi.models import Task, List
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
@@ -54,4 +53,30 @@ class Tasks(ViewSet):
             many=True,
             context={'request': request}
         )
+        return Response(serializer.data)
+
+
+    def create(self, request):
+
+        task_list = List.objects.get(pk=request.data["task_list_id"])
+        user = request.auth.user
+
+        new_task = Task()
+        new_task.user = user
+        new_task.task_list = task_list
+        new_task.name = request.data["name"] 
+        new_task.importance = None
+        new_task.recurring = None
+        new_task.is_complete = False
+        if request.data["description"] == "null":
+            new_task.description = None
+        else:
+            new_task.description = request.data["description"]
+        
+        new_task.save()
+
+        serializer = TaskSerializer(
+            new_task, context={'request': request}
+        )
+
         return Response(serializer.data)
