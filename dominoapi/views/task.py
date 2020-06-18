@@ -6,6 +6,7 @@ from rest_framework import serializers
 from rest_framework import status
 from dominoapi.models import Task, List
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
@@ -20,7 +21,7 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
             view_name='task',
             lookup_field='id'
         )
-        fields = ('id', 'name', 'description', 'is_complete', 'task_list',)
+        fields = ('id', 'name', 'description', 'is_complete', 'task_list', 'user')
         depth = 1
 
 class Tasks(ViewSet):
@@ -46,9 +47,8 @@ class Tasks(ViewSet):
         Returns:
             Response -- JSON serialized list of tasks
         """
-        task_list = self.request.query_params.get('task_list', None)
-        user = self.request.query_params.get('user', None)
-        tasks = Task.objects.all()
+        task_list = self.request.query_params.get('list', None)
+        tasks = Task.objects.filter(user=request.auth.user, task_list=task_list)
         serializer = TaskSerializer(
             tasks,
             many=True,
