@@ -6,7 +6,6 @@ from rest_framework import serializers
 from rest_framework import status
 from dominoapi.models import Task, List
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
@@ -55,3 +54,47 @@ class Tasks(ViewSet):
             context={'request': request}
         )
         return Response(serializer.data)
+
+
+    def create(self, request):
+
+        task_list = List.objects.get(pk=request.data["task_list_id"])
+        user = request.auth.user
+
+        new_task = Task()
+        new_task.user = user
+        new_task.task_list = task_list
+        new_task.name = request.data["name"] 
+        new_task.importance = None
+        new_task.recurring = None
+        new_task.is_complete = False
+        if request.data["description"] == "null":
+            new_task.description = None
+        else:
+            new_task.description = request.data["description"]
+        
+        new_task.save()
+
+        serializer = TaskSerializer(
+            new_task, context={'request': request}
+        )
+
+        return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single task
+        Returns:
+            Response -- 200, 404, or 500 status code 
+        """
+
+        try:
+            task = Task.objects.get(pk=pk)
+            task.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except Task.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
