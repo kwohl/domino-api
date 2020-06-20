@@ -32,8 +32,8 @@ class Tasks(ViewSet):
             Response -- JSON serialized task instance
         """
         try:
-            task_list = List.objects.get(pk=pk)
-            user = User.objects.get(pk=pk)
+            # task_list = List.objects.get(pk=pk)
+            # user = User.objects.get(pk=pk)
             task = Task.objects.get(pk=pk)
             serializer = TaskSerializer(task, context={'request': request})
             return Response(serializer.data)
@@ -80,6 +80,22 @@ class Tasks(ViewSet):
         )
 
         return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        """Handle PUT requests for an individual task
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        task_list = List.objects.get(pk=request.data["task_list_id"])
+
+        task = Task.objects.get(pk=pk)
+        task.name = request.data["name"]
+        task.description = request.data["description"]
+        task.task_list = task_list
+        task.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single task
