@@ -32,8 +32,8 @@ class Tasks(ViewSet):
             Response -- JSON serialized task instance
         """
         try:
-            task_list = List.objects.get(pk=pk)
-            user = User.objects.get(pk=pk)
+            # task_list = List.objects.get(pk=pk)
+            # user = User.objects.get(pk=pk)
             task = Task.objects.get(pk=pk)
             serializer = TaskSerializer(task, context={'request': request})
             return Response(serializer.data)
@@ -86,10 +86,10 @@ class Tasks(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
-        task_list = List.objects.get(pk=request.data["taskListId"])
+        task_list = List.objects.get(pk=request.data["task_list_id"])
 
         task = Task.objects.get(pk=pk)
-        task.name = request.data["name"] 
+        task.name = request.data["name"]
         task.description = request.data["description"]
         task.task_list = task_list
         task.save()
