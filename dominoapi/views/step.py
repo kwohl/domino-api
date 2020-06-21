@@ -49,3 +49,22 @@ class Steps(ViewSet):
             context={'request': request}
         )
         return Response(serializer.data)
+
+    def create(self, request):
+
+        new_step = Step()
+        new_step.name = request.data["name"] 
+        new_step.importance = None
+        new_step.is_complete = False
+        if request.data["description"] == "null":
+            new_step.description = None
+        else:
+            new_step.description = request.data["description"]
+        
+        new_step.save()
+
+        serializer = StepSerializer(
+            new_step, context={'request': request}
+        )
+
+        return Response(serializer.data)

@@ -31,8 +31,8 @@ class TaskSteps(ViewSet):
             Response -- JSON serialized taskstep instance
         """
         try:
-            task = Task.objects.get(pk=pk)
-            step = Step.objects.get(pk=pk)
+            # task = Task.objects.get(pk=pk)
+            # step = Step.objects.get(pk=pk)
             taskstep = TaskStep.objects.get(pk=pk)
             serializer = TaskStepSerializer(taskstep, context={'request': request})
             return Response(serializer.data)
@@ -45,7 +45,8 @@ class TaskSteps(ViewSet):
         Returns:
             Response -- JSON serialized list of tasksteps
         """
-        tasksteps = TaskStep.objects.all()
+        task = self.request.query_params.get('task', None)
+        tasksteps = TaskStep.objects.filter(task=task)
         serializer = TaskStepSerializer(
             tasksteps,
             many=True,
