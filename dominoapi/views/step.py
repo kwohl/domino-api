@@ -90,3 +90,16 @@ class Steps(ViewSet):
             
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def update(self, request, pk=None):
+        """Handle PUT requests for an individual step
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        step = Step.objects.get(pk=pk)
+        step.name = request.data["name"]
+        step.description = request.data["description"]
+        step.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
