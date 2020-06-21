@@ -4,7 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from dominoapi.models import Step
+from dominoapi.models import Step, TaskStep
 
 
 class StepSerializer(serializers.HyperlinkedModelSerializer):
@@ -62,6 +62,10 @@ class Steps(ViewSet):
             new_step.description = request.data["description"]
         
         new_step.save()
+
+        # new_task_step = TaskStep()
+        # new_task_step.step_id = new_step.id
+        # new_task_step.task_id = request.data["task_id"]
 
         serializer = StepSerializer(
             new_step, context={'request': request}
