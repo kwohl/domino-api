@@ -96,10 +96,16 @@ class Steps(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
+        complete = self.request.query_params.get('complete', None)
 
-        step = Step.objects.get(pk=pk)
-        step.name = request.data["name"]
-        step.description = request.data["description"]
+        if complete is not None:
+            step = Step.objects.get(pk=pk)
+            step.is_complete = request.data["is_complete"]
+        else:
+            step = Step.objects.get(pk=pk)
+            step.name = request.data["name"]
+            step.description = request.data["description"]
+
         step.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
