@@ -90,12 +90,17 @@ class Tasks(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
-        task_list = List.objects.get(pk=request.data["task_list_id"])
+        complete = self.request.query_params.get('complete', None)
 
-        task = Task.objects.get(pk=pk)
-        task.name = request.data["name"]
-        task.description = request.data["description"]
-        task.task_list = task_list
+        if complete is not None:
+            task = Task.objects.get(pk=pk)
+            task.is_complete = request.data["is_complete"]
+        else:
+            task_list = List.objects.get(pk=request.data["task_list_id"])
+            task = Task.objects.get(pk=pk)
+            task.name = request.data["name"]
+            task.description = request.data["description"]
+            task.task_list = task_list
         task.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
