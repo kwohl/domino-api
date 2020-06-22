@@ -47,7 +47,11 @@ class Tasks(ViewSet):
             Response -- JSON serialized list of tasks
         """
         task_list = self.request.query_params.get('list', None)
-        tasks = Task.objects.filter(user=request.auth.user, task_list=task_list)
+        if task_list is not None:
+            tasks = Task.objects.filter(user=request.auth.user, task_list=task_list)
+        else:
+            tasks = Task.objects.filter(user=request.auth.user)
+        
         serializer = TaskSerializer(
             tasks,
             many=True,
