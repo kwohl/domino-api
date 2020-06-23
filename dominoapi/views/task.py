@@ -4,7 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from dominoapi.models import Task, List
+from dominoapi.models import Task, List, TaskStep, Step
 from django.contrib.auth.models import User
 
 
@@ -109,13 +109,28 @@ class Tasks(ViewSet):
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single task
         Returns:
-            Response -- 200, 404, or 500 status code 
+            Response -- 200, 404, or 500 status code
         """
 
         try:
             task = Task.objects.get(pk=pk)
             task.delete()
 
+            steps = Step.objects.all()
+            task_steps = TaskStep.objects.all()
+            step_ids = set()
+            task_step_ids = set()
+            for step in steps:
+                step_ids.add(step.id)
+            for task_step in task_steps:
+                task_step_ids.add(task_step.step.id)
+            print("stepIds", step_ids)
+            print("taskStepIds:", task_step_ids)
+            for step_id in step_ids:
+                if step_id not in task_step_ids:
+                    step_to_delete = Step.objects.get(pk=step_id)
+                    step_to_delete.delete()
+                    # print("stepToDelete:", step_to_delete)
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
         except Task.DoesNotExist as ex:
