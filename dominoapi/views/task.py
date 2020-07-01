@@ -113,19 +113,24 @@ class Tasks(ViewSet):
         """
 
         try:
+            #deletes the selected task
             task = Task.objects.get(pk=pk)
             task.delete()
-
+            #gets all step objects and all taskStep objects
             steps = Step.objects.all()
             task_steps = TaskStep.objects.all()
+            #creates set for steps and taskSteps 
             step_ids = set()
             task_step_ids = set()
+            #for each step obj, add the ID to the step_ids set
             for step in steps:
                 step_ids.add(step.id)
+            #for each task_step obj, add the ID of the step (fk) to task_step_ids set
             for task_step in task_steps:
                 task_step_ids.add(task_step.step.id)
-            print("stepIds", step_ids)
-            print("taskStepIds:", task_step_ids)
+            # print("stepIds", step_ids)
+            # print("taskStepIds:", task_step_ids)
+            #for every id in the step_ids set, if it isn't in the task_step_ids set then delete the associated step
             for step_id in step_ids:
                 if step_id not in task_step_ids:
                     step_to_delete = Step.objects.get(pk=step_id)
