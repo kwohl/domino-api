@@ -1,5 +1,5 @@
 # Domino
-This is the Django REST API for Domino
+This is the Django REST API for Domino. Once you have the server running, please visit the repo for [Domino's front end application](https://github.com/kwohl/domino).
 
 ## How to run Domino
 
