@@ -31,8 +31,6 @@ class TaskSteps(ViewSet):
             Response -- JSON serialized taskstep instance
         """
         try:
-            # task = Task.objects.get(pk=pk)
-            # step = Step.objects.get(pk=pk)
             taskstep = TaskStep.objects.get(pk=pk)
             serializer = TaskStepSerializer(taskstep, context={'request': request})
             return Response(serializer.data)
@@ -54,37 +52,6 @@ class TaskSteps(ViewSet):
         )
         return Response(serializer.data)
 
-    
-    # def create(self, request):
-        
-    #     try:
-    #         step = Step.objects.get(pk=request.data['step_id'])
-            
-    #         new_task_step = TaskStep()
-    #         new_task_step.task_id = request.data['task_id']
-    #         new_task_step.step_id = step.id
-            
-    #         new_task_step.save()
-
-    #         serialize = TaskStepSerializer(new_order_product, context={'request': request}) 
-    #     except:
-    #         new_step = Step()
-    #         new_step.name = request.data['step_name']
-    #         new_step.description = request.data['step_description']
-    #         new_step.is_complete = False
-    #         new_step.importance = None
-    #         new_step.save()
-
-    #         new_task_step = TaskStep()
-    #         new_task_step.task_id = request.data['task_id']
-    #         new_task_step.step_id = new_step.id
-
-    #         new_order_product.save()
-
-    #         serialize = TaskStepSerializer(new_order_product, context={'request': request}) 
-
-    #     return Response(serialize.data) 
-    
     def create(self, request):
         task = Task.objects.get(pk=request.data["task_id"])
         step = Step.objects.get(pk=request.data["step_id"])
@@ -100,3 +67,32 @@ class TaskSteps(ViewSet):
         )
 
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single taskStep
+        Returns:
+            Response -- 200, 404, or 500 status code 
+        """
+
+        try:
+            task_step = TaskStep.objects.get(pk=pk)
+            step = Step.objects.get(pk=task_step.step.id)
+            
+            task_step.delete()
+
+            task_step_step_ids = set()
+            task_steps = TaskStep.objects.filter(step=step)
+            
+            for task_step in task_steps:
+                task_step_step_ids.add(task_step.step.id)
+
+            if step.id not in task_step_step_ids:
+                step.delete()   
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except Step.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
